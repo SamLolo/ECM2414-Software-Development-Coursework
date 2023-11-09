@@ -1,5 +1,5 @@
 
-public class Hand extends Deck {
+public class Hand extends CardCollection {
     
     public Hand() {
         super();

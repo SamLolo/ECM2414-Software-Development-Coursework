@@ -32,18 +32,34 @@ public class CardGame {
                 cards.add(new Card(nValue));
                 value = reader.readLine();
             }
-            
             reader.close();
             return cards;
         
         } catch (FileNotFoundException e) {
             System.out.println("Cannot find file: "+file);
             return cards;
-        
         } catch (IOException e) {
             System.out.println(e.getMessage());
             return new ArrayList<Card>();
         } 
+    }
+
+    private static void dealCardsToPlayers(ArrayList<Player> players, ArrayList<Card> pack) {
+        for (int i=0; i < 4; i++) {
+            for (Player player: players) {
+                Card card = pack.remove(0);
+                player.drawCard(card);
+            }
+        }
+    }
+
+    private static void dealCardsToDecks(ArrayList<Deck> decks, ArrayList<Card> pack) {
+        for (int i=0; i < 4; i++) {
+            for (Deck deck: decks) {
+                Card card = pack.remove(0);
+                deck.addCard(card);
+            }
+        }
     }
     
     public static void main(String[] args) {
@@ -67,12 +83,16 @@ public class CardGame {
 
         ArrayList<Card> cards = new ArrayList<Card>();
         System.out.println("Please enter the filename containing the pack of cards:");
-        while (cards.isEmpty()) {
+        while (true) {
             String file = input.nextLine();
             cards = loadPack(file);
-
-        System.out.println("You entered "+file);
-        input.close();
+            if (cards.size() == 8*n) {
+                System.out.println("You entered "+file);
+                break;
+            } else {
+                System.out.println("The pack provided must contain "+(8*n)+" cards to be used for "+n+" players!");
+            }
         }
+        input.close();
     }
 }

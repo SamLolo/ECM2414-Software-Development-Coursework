@@ -1,46 +1,22 @@
-import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class Deck {
+public class Deck extends CardCollection {
+    private static final AtomicInteger counter = new AtomicInteger();
     
-    private int number;
-    protected ArrayList<Card> cards;
-
+    private final int identifier;
+    
     public Deck() {
-        cards = new ArrayList<Card>();
+        super();
+        identifier = counter.incrementAndGet();
     }
-    
-    public Deck(int n) {
-        number = n;
-        cards = new ArrayList<Card>();
-    }
-    
-    public void addCard(Card card) {
-        cards.add(card);
-    }
-    
-    public Card getCard(int index) {
-        return cards.get(index);
-    }
-    
-    public ArrayList<Card> getCards() {
-        return cards;
-    }
-    
-    public void removeCard(int index) {
-        cards.remove(index);
-    }
-    
-    public void removeCard(Card card) {
-        cards.remove(card);
-    }
-    
-    public int size() {
-        return cards.size();
+
+    public int getIdentifier() {
+        return identifier;
     }
     
     @Override
     public String toString() {
-        String str = "deck "+number+" contents:";
+        String str = "deck "+identifier+" contents:";
         for (int i = 0; i < cards.size(); i++) {
             str += " "+cards.get(i).toString();
         }
