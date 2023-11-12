@@ -79,6 +79,7 @@ public class CardGame {
                 input.nextLine();
             };
         };
+        input.close();
         System.out.println("You entered "+n+"\n");
         return n;
     };
