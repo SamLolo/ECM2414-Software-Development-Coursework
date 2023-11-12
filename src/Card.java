@@ -1,7 +1,7 @@
 
 public class Card {
     
-    private int value = -1;
+    private final int value;
 
     public Card(int value) {
         this.value = value;

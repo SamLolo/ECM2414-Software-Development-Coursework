@@ -8,7 +8,9 @@ import java.io.FileNotFoundException;
 
 public class CardGame {
 
-    private static ArrayList<Card> loadPack(String file) {
+    private static ArrayList<Player> players = new ArrayList<Player>();
+
+    private static ArrayList<Card> loadPack(String file, int length) {
         ArrayList<Card> cards = new ArrayList<Card>();
 
         try {
@@ -33,7 +35,13 @@ public class CardGame {
                 value = reader.readLine();
             }
             reader.close();
-            return cards;
+
+            if (cards.size() == 8*length) {
+                return cards;
+            } else {
+                System.out.println("The pack provided must contain "+(8*length)+" cards to be used for "+length+" players!");
+                return new ArrayList<Card>();
+            }
         
         } catch (FileNotFoundException e) {
             System.out.println("Cannot find file: "+file);
@@ -44,7 +52,25 @@ public class CardGame {
         } 
     }
 
-    private static void dealCardsToPlayers(ArrayList<Player> players, ArrayList<Card> pack) {
+    private static ArrayList<Deck> createDecks(int n) {
+        ArrayList<Deck> decks = new ArrayList<Deck>();
+        for (int i=0; i < n; i++) {
+            decks.add(new Deck());
+        }
+        return decks;
+    }
+
+    private static void addPlayers(int n, ArrayList<Deck> decks) {
+        for (int i=0; i < n; i++) {
+            if (i < n-1) {
+                players.add(new Player(decks.get(i), decks.get(i+1)));
+            } else {
+                players.add(new Player(decks.get(i), decks.get(0)));
+            }
+        }
+    }
+
+    private static void dealCardsToPlayers(ArrayList<Card> pack) {
         for (int i=0; i < 4; i++) {
             for (Player player: players) {
                 Card card = pack.remove(0);
@@ -61,8 +87,9 @@ public class CardGame {
             }
         }
     }
+    
+    public static void main(String[] args) {
 
-    private static int getNumberOfPlayers() {
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter the number of players:");
         int n = -1;
@@ -71,36 +98,31 @@ public class CardGame {
                 n = input.nextInt();
                 if (n <= 0) {
                     System.out.println("Number of players must be greater than 0!");
-                };
+                }
             } catch (InputMismatchException e) {
                 System.out.println("Number of players must be an integer!");
-                n = -1;
             } finally {
                 input.nextLine();
-            };
-        };
-        input.close();
-        System.out.println("You entered "+n+"\n");
-        return n;
-    };
-    
-    public static void main(String[] args) {
-
-        int n = getNumberOfPlayers();
-
-        Scanner input = new Scanner(System.in);
-        ArrayList<Card> cards = new ArrayList<Card>();
-        System.out.println("Please enter the filename containing the pack of cards:");
-        while (true) {
-            String file = input.nextLine();
-            cards = loadPack(file);
-            if (cards.size() == 8*n) {
-                System.out.println("You entered "+file);
-                break;
-            } else {
-                System.out.println("The pack provided must contain "+(8*n)+" cards to be used for "+n+" players!");
             }
         }
+
+        ArrayList<Card> cards = new ArrayList<Card>();
+        System.out.println("\nPlease enter the filename containing the pack of cards:");
+        while (cards.isEmpty()) {
+            String file = input.nextLine();
+            cards = loadPack(file, n);
+        }
         input.close();
+        System.out.println();
+
+        ArrayList<Deck> decks = createDecks(n);
+        addPlayers(n, decks);
+        dealCardsToPlayers(cards);
+        dealCardsToDecks(decks, cards);
+
+        for (int i=0; i < players.size(); i++) {
+            Player player = players.get(i);
+            player.start();
+        }
     }
 }
