@@ -61,8 +61,8 @@ public class CardGame {
             }
         }
     }
-    
-    public static void main(String[] args) {
+
+    private static int getNumberOfPlayers() {
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter the number of players:");
         int n = -1;
@@ -80,7 +80,14 @@ public class CardGame {
             };
         };
         System.out.println("You entered "+n+"\n");
+        return n;
+    };
+    
+    public static void main(String[] args) {
 
+        int n = getNumberOfPlayers();
+
+        Scanner input = new Scanner(System.in);
         ArrayList<Card> cards = new ArrayList<Card>();
         System.out.println("Please enter the filename containing the pack of cards:");
         while (true) {
