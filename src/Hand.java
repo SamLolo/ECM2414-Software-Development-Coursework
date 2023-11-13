@@ -1,8 +1,15 @@
+import java.util.Random;
 
 public class Hand extends CardCollection {
     
     public Hand() {
         super();
+    }
+
+    public Card getRandomCard() {
+        Random selector = new Random();
+        int n = selector.nextInt(3);
+        return cards.get(n);
     }
 
     @Override

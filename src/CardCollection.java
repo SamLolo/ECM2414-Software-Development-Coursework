@@ -9,11 +9,17 @@ abstract class CardCollection {
         cards = new ArrayList<Card>();
     }
     
-    public void addCard(Card card) {
+    public synchronized void addCard(Card card) {
         cards.add(card);
+        notify();
+    }
+
+    public synchronized void insertCard(Card card, int index) {
+        cards.add(index, card);
+        notify();
     }
     
-    public Card getCard(int index) {
+    public synchronized Card getCard(int index) {
         return cards.get(index);
     }
     
@@ -21,12 +27,22 @@ abstract class CardCollection {
         return cards;
     }
     
-    public void removeCard(int index) {
-        cards.remove(index);
+    public synchronized Card removeCard(int index) {
+        if (cards.size() == 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Card card = cards.remove(index);
+        return card;
     }
-    
-    public void removeCard(Card card) {
-        cards.remove(card);
+
+    public synchronized void removeCard(Card card) {
+        if (cards.contains(card)) {
+            cards.remove(card);
+        }
     }
     
     public int size() {
