@@ -1,12 +1,7 @@
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardCollectionTest {
-
-    @Test
-    void testToString() {
-    }
 
     @Test
     void addCard() {
@@ -30,5 +25,9 @@ class CardCollectionTest {
 
     @Test
     void size() {
+    }
+
+    @Test
+    void testToString() {
     }
 }
