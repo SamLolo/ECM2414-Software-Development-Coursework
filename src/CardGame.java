@@ -52,7 +52,7 @@ public class CardGame {
         } 
     }
 
-    private static ArrayList<Deck> createDecks(int n) {
+    public static ArrayList<Deck> createDecks(int n) {
         ArrayList<Deck> decks = new ArrayList<Deck>();
         for (int i=0; i < n; i++) {
             decks.add(new Deck());
