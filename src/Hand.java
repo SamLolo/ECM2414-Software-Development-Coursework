@@ -12,6 +12,12 @@ public class Hand extends CardCollection {
         return cards.get(n);
     }
 
+    public void removeCard(Card card) {
+        if (cards.contains(card)) {
+            cards.remove(card);
+        }
+    }
+
     @Override
     public String toString() {
         String str = "";
