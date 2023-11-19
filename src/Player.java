@@ -12,7 +12,16 @@ public class Player extends Thread {
     private Deck rightDeck;
     private final int identifier;
     private BufferedWriter output;
-    
+
+    public Deck getLeftDeck() { return leftDeck;
+    }
+    public Deck getRightDeck() {
+        return rightDeck;
+    }
+
+    public Hand getHand() { return hand;
+    }
+
     public Player(Deck left, Deck right) {
         hand = new Hand();
         leftDeck = left;
@@ -116,4 +125,5 @@ public class Player extends Thread {
             System.out.println(ex.getMessage());
         }
     }
+
 }
