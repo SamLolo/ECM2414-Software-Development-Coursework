@@ -1,32 +1,52 @@
-import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.Iterator;
 
 abstract class CardCollection {
 
-    protected ArrayList<Card> cards;
-    public abstract String toString();
+    protected BlockingQueue<Card> cards;
 
     public CardCollection() {
-        cards = new ArrayList<Card>();
+        cards = new LinkedBlockingQueue<Card>();
     }
     
     public void addCard(Card card) {
         cards.add(card);
     }
     
-    public Card getCard(int index) {
-        return cards.get(index);
+    public Card getCard() {
+        return cards.peek();
     }
     
-    public ArrayList<Card> getCards() {
-        return cards;
+    public Iterator<Card> getIterator() {
+        return cards.iterator();
     }
     
-    public Card removeCard(int index) {
-        Card card = cards.remove(index);
-        return card;
+    public Card removeCard() {
+        try {
+            Card card = cards.take();
+            return card;
+        } catch (InterruptedException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
     }
     
     public int size() {
         return cards.size();
+    }
+
+    @Override
+    public String toString() {
+        Iterator<Card> iter = cards.iterator();
+        if (!cards.isEmpty()) {
+            String str = iter.next().toString();
+            while (iter.hasNext()) {
+                str += " "+iter.next().toString();
+            }
+            return str;
+        } else {
+            return "";
+        }
     }
 }

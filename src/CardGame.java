@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 public class CardGame {
 
     private static ArrayList<Player> players = new ArrayList<Player>();
+    private static ArrayList<Deck> decks = new ArrayList<Deck>();
 
     public static ArrayList<Player> getPlayers() {
         return players;
@@ -18,6 +19,17 @@ public class CardGame {
         players = Players;
     }
 
+    public static void gameOver(int winner) {
+        System.out.println("player "+winner+" wins");
+        for (Player player: players) {
+            if (player.getIdentifier() != winner) {
+                player.interrupt();
+            }
+        }
+        for (Deck deck: decks) {
+            deck.outputDeck();
+        }
+    }
 
     static ArrayList<Card> loadPack(String file, int length) {
         ArrayList<Card> cards = new ArrayList<Card>();
@@ -61,19 +73,19 @@ public class CardGame {
         }
     }
 
-    public static ArrayList<Deck> createDecks(int n) {
-        ArrayList<Deck> decks = new ArrayList<Deck>();
+    public static void createDecks(int n) {
         for (int i = 0; i < n; i++) {
             decks.add(new Deck());
         }
-        return decks;
     }
 
-    static void addPlayers(int n, ArrayList<Deck> decks) {
+    static void addPlayers(int n) {
         for (int i = 0; i < n; i++) {
             if (i < n - 1) {
+                System.out.println("Created player with decks: "+decks.get(i).getIdentifier()+" & "+decks.get(i+1).getIdentifier());
                 players.add(new Player(decks.get(i), decks.get(i + 1)));
             } else {
+                System.out.println("Created player with decks: "+decks.get(i).getIdentifier()+" & "+decks.get(0).getIdentifier());
                 players.add(new Player(decks.get(i), decks.get(0)));
             }
         }
@@ -124,8 +136,8 @@ public class CardGame {
         input.close();
         System.out.println();
 
-        ArrayList<Deck> decks = createDecks(n);
-        addPlayers(n, decks);
+        createDecks(n);
+        addPlayers(n);
         dealCardsToPlayers(cards);
         dealCardsToDecks(decks, cards);
 
@@ -134,5 +146,4 @@ public class CardGame {
             player.start();
         }
     }
-
 }

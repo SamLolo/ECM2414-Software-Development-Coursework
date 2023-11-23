@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -13,13 +14,16 @@ public class Player extends Thread {
     private final int identifier;
     private BufferedWriter output;
 
-    public Deck getLeftDeck() { return leftDeck;
+    public Deck getLeftDeck() { 
+        return leftDeck;
     }
+
     public Deck getRightDeck() {
         return rightDeck;
     }
 
-    public Hand getHand() { return hand;
+    public Hand getHand() { 
+        return hand;
     }
 
     public Player(Deck left, Deck right) {
@@ -47,10 +51,11 @@ public class Player extends Thread {
     }
 
     private Boolean checkWin() {
-        Card lastCard = hand.getCard(0);
-        for (int i=1; i < hand.size(); i++) {
-            Card newCard = hand.getCard(i);
-            if (lastCard.getValue() != newCard.getValue()) {
+        Iterator<Card> iter = hand.getIterator();
+        Card winningCard = iter.next();
+        while (iter.hasNext()) {
+            Card nextCard = iter.next();
+            if (winningCard.getValue() != nextCard.getValue()) {
                 return false;
             }
         }
@@ -88,12 +93,12 @@ public class Player extends Thread {
 
         if (checkWin()) {
             winner.set(identifier);
-            System.out.println("player "+identifier+" wins");
+            CardGame.gameOver(identifier);
             writeOuput("player "+identifier+" wins");
         }
         
         while (!checkGameOver()) {
-            Card newCard = leftDeck.removeCard(0);
+            Card newCard = leftDeck.removeCard();
             if (newCard == null) {
                 break;
             }
@@ -108,14 +113,15 @@ public class Player extends Thread {
             
             if (checkWin() & !checkGameOver()) {
                 winner.set(identifier);
-                System.out.println("player "+identifier+" wins");
+                CardGame.gameOver(identifier);
                 writeOuput("player "+identifier+" wins");
+                break;
             } else if (checkGameOver()) {
-                writeOuput("player "+winner.get()+" has informed player "+identifier+" that player "+winner.get()+" has won");
+                break;
             }
         }
-
-        rightDeck.cleanup();
+       
+        writeOuput("player "+winner.get()+" has informed player "+identifier+" that player "+winner.get()+" has won");
         writeOuput("player "+identifier+" exits");
         writeOuput("player "+identifier+" final hand:"+hand.toString());
         
