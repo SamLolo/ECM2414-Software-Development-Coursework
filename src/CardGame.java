@@ -82,10 +82,8 @@ public class CardGame {
     static void addPlayers(int n) {
         for (int i = 0; i < n; i++) {
             if (i < n - 1) {
-                System.out.println("Created player with decks: "+decks.get(i).getIdentifier()+" & "+decks.get(i+1).getIdentifier());
                 players.add(new Player(decks.get(i), decks.get(i + 1)));
             } else {
-                System.out.println("Created player with decks: "+decks.get(i).getIdentifier()+" & "+decks.get(0).getIdentifier());
                 players.add(new Player(decks.get(i), decks.get(0)));
             }
         }

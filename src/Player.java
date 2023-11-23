@@ -109,7 +109,7 @@ public class Player extends Thread {
             hand.removeCard(toDiscard);
             rightDeck.addCard(toDiscard);
             writeOuput("player "+identifier+" discards a "+toDiscard.toString()+" to deck "+rightDeck.getIdentifier());
-            writeOuput("player "+identifier+" current hand is"+hand.toString());
+            writeOuput("player "+identifier+" current hand is "+hand.toString());
             
             if (checkWin() & !checkGameOver()) {
                 winner.set(identifier);
@@ -123,7 +123,7 @@ public class Player extends Thread {
        
         writeOuput("player "+winner.get()+" has informed player "+identifier+" that player "+winner.get()+" has won");
         writeOuput("player "+identifier+" exits");
-        writeOuput("player "+identifier+" final hand:"+hand.toString());
+        writeOuput("player "+identifier+" final hand: "+hand.toString());
         
         try {
             output.close();
