@@ -22,7 +22,7 @@ public class CardGameTest {
         @DisplayName("Load pack with valid file")
         void loadPackWithValidFile() {
             //Test with a valid file -Should produce no Error
-            ArrayList<Card> cards = CardGame.loadPack("validPack.txt", 4);
+            ArrayList<Card> cards = CardGame.get_loadPack("validPack.txt", 4);
             assertFalse(cards.isEmpty());
             assertEquals(32, cards.size());
         }
@@ -31,7 +31,7 @@ public class CardGameTest {
         @DisplayName("Load pack with invalid file")
         void loadPackWithTooShortFile() {
             //Test With a file that doesn't contain enough values
-            ArrayList<Card> cards = CardGame.loadPack("tooShortPack.txt", 4);
+            ArrayList<Card> cards = CardGame.get_loadPack("tooShortPack.txt", 4);
             assertTrue(cards.isEmpty());
         }
     }

@@ -18,10 +18,6 @@ public class CardGame {
         return decks;
     }
 
-    public static void setPlayers(ArrayList<Player> Players) {
-        players = Players;
-    }
-
     public static void gameOver(int winner) {
         // Output winner to console
         System.out.println("player "+winner+" wins");
@@ -90,6 +86,10 @@ public class CardGame {
         } catch (IOException e) {
             return new ArrayList<Card>();
         }
+    }
+
+    public static ArrayList<Card> get_loadPack(String file, int length){
+        return CardGame.loadPack(file, length);
     }
 
     private static void createDecks(int n) {
