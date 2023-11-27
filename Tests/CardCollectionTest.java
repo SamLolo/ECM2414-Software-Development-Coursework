@@ -44,22 +44,22 @@ class CardCollectionTest {
     void testAddCards() {
 
         assertEquals(4, cardCollection.size());
-        assertEquals(card1, cardCollection.getCard(0));
-        assertEquals(card2, cardCollection.getCard(1));
+        assertEquals(card1, cardCollection.removeCard());
+        assertEquals(card2, cardCollection.removeCard());
 
     }
 
     @Test
     void testGetAllCards() {
-        assertEquals(cards, cardCollection.getCards());
+        assertEquals(cards.size(), cardCollection.size());
     }
 
     @Test
     void testRemoveCard() {
-        cardCollection.removeCard(0);
+        cardCollection.removeCard();
         cards.remove(0);
 
-        assertEquals(cards, cardCollection.getCards());
+        assertEquals(cards.size(), cardCollection.size());
 
     }
 

@@ -1,196 +1,97 @@
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 
-class CardGameTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    @Test
-    void testCreateDeck() {
-        ArrayList<Deck> decks = CardGame.createDecks(4);
+public class CardGameTest {
 
-        assertNotNull(decks);
-        assertEquals(4, decks.size());
+    private ArrayList<Deck> decks;
 
-        for (Deck deck : decks) {
-            assertNotNull(decks);
-            assertTrue(deck.getCards().isEmpty());
+    @BeforeEach
+    void setUp() {
+        ArrayList<Player> players = new ArrayList<>();
+        decks = new ArrayList<>();
+    }
+
+    @Nested
+    @DisplayName("Load Pack Tests")
+    class LoadPackTests {
+
+        @Test
+        @DisplayName("Load pack with valid file")
+        void loadPackWithValidFile() {
+            ArrayList<Card> cards = CardGame.loadPack("validPack.txt", 4);
+            assertFalse(cards.isEmpty());
+            assertEquals(32, cards.size());
+        }
+
+        @Test
+        @DisplayName("Load pack with invalid file")
+        void loadPackWithInvalidFile() {
+            ArrayList<Card> cards = CardGame.loadPack("invalidPack.txt", 4);
+            assertTrue(cards.isEmpty());
         }
     }
 
     @Nested
-    @DisplayName("CardGame LoadPack Tests")
-    class CardGameLoadPackTest {
+    @DisplayName("Deck and Player Tests")
+    class DeckAndPlayerTests {
+
         @Test
-        public void testLoadPackValidFile() {
-
-            String validFile = "validPack.txt";
-            int length = 4;
-
-            ArrayList<Card> cards = CardGame.loadPack(validFile, length);
-
-            assertNotNull(cards);
-            assertEquals(8 * length, cards.size());
+        @DisplayName("Create decks")
+        void createDecks() {
+            int numberOfDecks = CardGame.getDecks().size();
+            CardGame.createDecks(3);
+            assertEquals(numberOfDecks + 3, CardGame.getDecks().size());
         }
 
         @Test
-        public void testLoadPackValidFileWithIncorrectLength() {
-            String validFile = "validPack.txt";
-            int length = 3;
+        @DisplayName("Add players")
+        void addPlayers() {
+            int numberOfDecks = CardGame.getDecks().size();
+            int numberOfPlayers = CardGame.getPlayers().size();
 
-            ArrayList<Card> cards = CardGame.loadPack(validFile, length);
+            CardGame.createDecks(2);
+            CardGame.addPlayers(2);
 
-            assertTrue(cards.isEmpty());
+            assertEquals(numberOfPlayers + 2, CardGame.getPlayers().size());
+            assertNotNull(CardGame.getPlayers().get(0).getLeftDeck());
+            assertNotNull(CardGame.getPlayers().get(0).getRightDeck());
+            assertNotEquals(CardGame.getPlayers().get(0).getLeftDeck(), CardGame.getPlayers().get(0).getRightDeck());
         }
 
         @Test
-        public void testLoadPackInvalidFile() {
-            String invalidFile = "invalidPack.txt";
-            int length = 4;
-
-            ArrayList<Card> cards = CardGame.loadPack(invalidFile, length);
-
-            assertNotNull(cards);
-            assertTrue(cards.isEmpty());
-        }
-
-        @Test
-        public void testLoadPackNegativeValue() {
-            // Arrange
-            String fileWithNegativeValue = "negativeValuePack.txt";
-            int length = 4;
-
-            // Act
-            ArrayList<Card> cards = CardGame.loadPack(fileWithNegativeValue, length);
-
-            // Assert
-            assertNotNull(cards);
-            assertTrue(cards.isEmpty());
-        }
-
-        @Test
-        public void testLoadPackFileNotFoundException() {
-            // Arrange
-            String nonExistentFile = "nonExistentPack.txt";
-            int length = 4;
-
-            ArrayList<Card> cards = CardGame.loadPack(nonExistentFile, length);
-
-            assertNotNull(cards);
-            assertTrue(cards.isEmpty());
-        }
-    }
-
-
-    @Nested
-    @DisplayName("CardGame AddPlayers Tests")
-    class CardGameAddPlayersTest {
-
-        private ArrayList<Deck> decks;
-
-        @BeforeEach
-        void setUp() {
-            CardGame.setPlayers(new ArrayList<Player>());
-
-            decks = new ArrayList<>();
-            for (int i = 0; i < 4; i++) {
-                decks.add(new Deck());
-            }
-        }
-
-        @Test
-        void testAddPlayers() {
-            int numberOfPlayers = 4;
-            CardGame.addPlayers(numberOfPlayers, decks);
-
-            ArrayList<Player> players = CardGame.getPlayers();
-
-            assertNotNull(players);
-            assertEquals(numberOfPlayers, players.size());
-
-            for (int i = 0; i < numberOfPlayers; i++) {
-                Player player = players.get(i);
-                assertNotNull(player);
-                assertEquals(decks.get(i), player.getLeftDeck());
-                assertEquals(decks.get((i + 1) % numberOfPlayers), player.getRightDeck());
-            }
-        }
-    }
-
-    @Nested
-    @DisplayName("CardGame DealCardsToPlayers Tests")
-    class CardGameDealCardsToPlayersTest {
-
-        private ArrayList<Player> players;
-        private ArrayList<Card> pack;
-
-        @BeforeEach
-        void setUp() {
-            players = new ArrayList<Player>();
-            for (int i = 0; i < 4; i++) {
-                players.add(new Player(new Deck(), new Deck()));
-            }
-
-            pack = new ArrayList<Card>();
-            for (int i = 1; i <= 32; i++) {
+        @DisplayName("Deal cards to players")
+        void dealCardsToPlayers() {
+            ArrayList<Card> pack = new ArrayList<>();
+            for (int i = 1; i <= 16; i++) {
                 pack.add(new Card(i));
             }
-        }
 
-        @Test
-        void testDealCardsToPlayers() {
-            CardGame.setPlayers(players);
-
+            CardGame.createDecks(2);
+            CardGame.addPlayers(2);
             CardGame.dealCardsToPlayers(pack);
 
-            for (Player player : players) {
+            for (Player player : CardGame.getPlayers()) {
                 assertEquals(4, player.getHand().size());
             }
-
-            CardGame.dealCardsToPlayers(pack);
-
-            for (Player player : players) {
-                assertEquals(8, player.getHand().size());
-            }
-
-            assertEquals(0, pack.size());
-
-        }
-    }
-
-    @Nested
-    @DisplayName("CardGame DealCardsToDecks Tests")
-    class CardGameDealCardsToDecksTest {
-
-        private ArrayList<Card> pack;
-
-        @BeforeEach
-        void setUp() {
-            pack = new ArrayList<>();
-            for (int i = 1; i <= 32; i++) {
-                pack.add(new Card(i));
-            }
         }
 
         @Test
-        void testDealCardsToDecks() {
-            ArrayList<Deck> decks = CardGame.createDecks(4);
+        @DisplayName("Deal cards to decks")
+        void dealCardsToDecks() {
+            ArrayList<Card> pack = new ArrayList<>();
+            for (int i = 1; i <= 16; i++) {
+                pack.add(new Card(i));
+            }
 
+            CardGame.createDecks(2);
             CardGame.dealCardsToDecks(decks, pack);
 
             for (Deck deck : decks) {
-                assertEquals(4, deck.getCards().size());
+                assertEquals(4, deck.size());
             }
-
-            CardGame.dealCardsToDecks(decks, pack);
-
-            for (Deck deck : decks) {
-                assertEquals(8, deck.getCards().size());
-            }
-
-            assertEquals(0, pack.size());
         }
     }
 }

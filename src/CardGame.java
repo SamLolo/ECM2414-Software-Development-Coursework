@@ -14,6 +14,9 @@ public class CardGame {
     public static ArrayList<Player> getPlayers() {
         return players;
     }
+    public static ArrayList<Deck> getDecks() {
+        return decks;
+    }
 
     public static void setPlayers(ArrayList<Player> Players) {
         players = Players;

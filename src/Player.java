@@ -62,7 +62,7 @@ public class Player extends Thread {
         return true;
     }
 
-    private Card getRandomDiscard() {
+    Card getRandomDiscard() {
         Card toDiscard = hand.getRandomCard();
         while (toDiscard.getValue() == identifier) {
             toDiscard = hand.getRandomCard();
