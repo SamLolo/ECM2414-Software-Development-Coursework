@@ -23,13 +23,15 @@ abstract class CardCollection {
     }
     
     public Card removeCard() {
+        // Try returning card at head of collection
         try {
             Card card = cards.take();
             return card;
+
+        // Return null if thread is interupted
         } catch (InterruptedException ex) {
-            System.out.println(ex.getMessage());
+            return null;
         }
-        return null;
     }
     
     public int size() {
@@ -38,6 +40,8 @@ abstract class CardCollection {
 
     @Override
     public String toString() {
+        // Return "" if cards is empty, otherwise iterate through using iterator object, 
+        // concatenating as a string to be returned
         Iterator<Card> iter = cards.iterator();
         if (!cards.isEmpty()) {
             String str = iter.next().toString();

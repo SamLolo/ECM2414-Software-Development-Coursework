@@ -39,7 +39,7 @@ public class CardGame {
         }
     }
 
-    static ArrayList<Card> loadPack(String file, int length) {
+    private static ArrayList<Card> loadPack(String file, int length) {
         // Create an empty pack of cards
         ArrayList<Card> cards = new ArrayList<Card>();
 
@@ -92,14 +92,14 @@ public class CardGame {
         }
     }
 
-    public static void createDecks(int n) {
+    private static void createDecks(int n) {
         // Create n new deck objects, adding them to the private ArrayList decks
         for (int i = 0; i < n; i++) {
             decks.add(new Deck());
         }
     }
 
-    static void addPlayers(int n) {
+    private static void addPlayers(int n) {
         // Create n players, passing in their left and right deck, with the right deck being deck 1 (index 0) for the last player
         for (int i = 0; i < n; i++) {
             if (i < n - 1) {
@@ -110,7 +110,7 @@ public class CardGame {
         }
     }
 
-    static void dealCardsToPlayers(ArrayList<Card> pack) {
+    private static void dealCardsToPlayers(ArrayList<Card> pack) {
         // Go round each player in a round-robin fashion, removing the head of the pack and adding to the players hand until all players have 4 cards
         for (int i = 0; i < 4; i++) {
             for (Player player : players) {
@@ -120,7 +120,7 @@ public class CardGame {
         }
     }
 
-    static void dealCardsToDecks(ArrayList<Deck> decks, ArrayList<Card> pack) {
+    private static void dealCardsToDecks(ArrayList<Deck> decks, ArrayList<Card> pack) {
         // Deal the remaining cards to the deck in a round-robin fashion, with 4 cards in each deck
         for (int i = 0; i < 4; i++) {
             for (Deck deck : decks) {
