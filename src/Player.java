@@ -14,15 +14,18 @@ public class Player extends Thread {
     private final int identifier;
     private BufferedWriter output;
 
-    public Deck getLeftDeck() { 
+    public Deck getLeftDeck() {
+        //A getter methods for testing
         return leftDeck;
     }
 
     public Deck getRightDeck() {
+        //A getter methods for testing
         return rightDeck;
     }
 
-    public Hand getHand() { 
+    public Hand getHand() {
+        //A getter methods for testing
         return hand;
     }
 
@@ -78,6 +81,7 @@ public class Player extends Thread {
     }
 
     public Card get_getRandomDiscard(){
+        //A public method to be able to access getRandomDiscard for testing
         return getRandomDiscard();
     }
 

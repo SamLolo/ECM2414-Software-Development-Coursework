@@ -12,9 +12,11 @@ public class CardGame {
     private static ArrayList<Deck> decks = new ArrayList<Deck>();
 
     public static ArrayList<Player> getPlayers() {
+        //A getter methods for testing
         return players;
     }
     public static ArrayList<Deck> getDecks() {
+        //A getter methods for testing
         return decks;
     }
 
@@ -89,6 +91,7 @@ public class CardGame {
     }
 
     public static ArrayList<Card> get_loadPack(String file, int length){
+        //A public method to be able to access LoadPack for testing
         return CardGame.loadPack(file, length);
     }
 
@@ -100,6 +103,7 @@ public class CardGame {
     }
 
     public static void get_createDecks(int n) {
+        //A public method to be able to access createDecks for testing
         CardGame.createDecks(n);
     }
 
@@ -115,6 +119,7 @@ public class CardGame {
     }
 
     public static void get_addPlayers(int n) {
+        //A public method to be able to access addPlayers for testing
         CardGame.addPlayers(n);
     }
 
@@ -129,6 +134,7 @@ public class CardGame {
     }
 
     public static void get_dealCardsToPlayers(ArrayList<Card> pack) {
+        //A public method to be able to access dealCardsToPlayers for testing
         CardGame.dealCardsToPlayers(pack);
     }
 
@@ -143,6 +149,7 @@ public class CardGame {
     }
 
     public static void get_dealCardsToDecks(ArrayList<Deck> decks, ArrayList<Card> pack) {
+        //A public method to be able to access dealCardsToDecks for testing
         CardGame.dealCardsToDecks(decks, pack);
     }
 

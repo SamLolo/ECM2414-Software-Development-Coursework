@@ -9,7 +9,7 @@ public class Deck extends CardCollection {
     private final int identifier;
     
     public Deck() {
-        // Instanciate extended CardCollection class and create unique integer identifer from static counter
+        // Instanciate extended CardCollection class and create unique integer identifier from static counter
         super();
         identifier = counter.incrementAndGet();
     }
