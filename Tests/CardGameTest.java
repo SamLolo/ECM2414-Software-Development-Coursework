@@ -4,15 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CardGameTest {
 
-    private ArrayList<Deck> decks;
-    //Create an Array of Decks that all the test functions can use and implement
-
-    @BeforeEach
-    void setUp() {
-        decks = new ArrayList<>();
-    }
-    //Before each test the Decks Array is set to empty so there is no over spill from test to test
-
     @Nested
     @DisplayName("Load Pack Tests")
     class LoadPackTests {
@@ -21,17 +12,33 @@ public class CardGameTest {
         @Test
         @DisplayName("Load pack with valid file")
         void loadPackWithValidFile() {
-            //Test with a valid file -Should produce no Error
+            //Test with a valid file - Should produce no Error
             ArrayList<Card> cards = CardGame.get_loadPack("validPack.txt", 4);
             assertFalse(cards.isEmpty());
             assertEquals(32, cards.size());
         }
 
         @Test
-        @DisplayName("Load pack with invalid file")
+        @DisplayName("Load pack with Short file")
         void loadPackWithTooShortFile() {
             //Test With a file that doesn't contain enough values
             ArrayList<Card> cards = CardGame.get_loadPack("tooShortPack.txt", 4);
+            assertTrue(cards.isEmpty());
+        }
+
+        @Test
+        @DisplayName("Load pack with contains a negative file")
+        void loadPackWithNegativeFile() {
+            //Test With a file that contains a negative
+            ArrayList<Card> cards = CardGame.get_loadPack("negativePack.txt", 4);
+            assertTrue(cards.isEmpty());
+        }
+
+        @Test
+        @DisplayName("Load pack with contains a zero file")
+        void loadPackWithZeroFile() {
+            //Test With a file that contains a zero
+            ArrayList<Card> cards = CardGame.get_loadPack("zeroPack.txt", 4);
             assertTrue(cards.isEmpty());
         }
     }
@@ -87,11 +94,26 @@ public class CardGameTest {
             for (Player player : CardGame.getPlayers()) {
                 assertEquals(4, player.getHand().size());
             }
+
+            //Check that the cards were dealt in a Round Robin fashion
+            ArrayList<Player> players = CardGame.getPlayers();
+
+            //Player 1 should have all odd cards
+            assertEquals(1, players.get(0).getHand().removeCard().getValue());
+            assertEquals(3, players.get(0).getHand().removeCard().getValue());
+            assertEquals(5, players.get(0).getHand().removeCard().getValue());
+            assertEquals(7, players.get(0).getHand().removeCard().getValue());
+
+            //Player 2 should have all even cards
+            assertEquals(2, players.get(1).getHand().removeCard().getValue());
+            assertEquals(4, players.get(1).getHand().removeCard().getValue());
+            assertEquals(6, players.get(1).getHand().removeCard().getValue());
+            assertEquals(8, players.get(1).getHand().removeCard().getValue());
         }
 
         @Test
         @DisplayName("Deal cards to decks")
-        void dealCardsToDecksAndCheckSizeOfDecks() {
+        void dealCardsToDecks() {
             //Test that cards uploaded from a pack are successfully dealt to the created decks
 
             //Generates a Pack of Cards
@@ -102,12 +124,27 @@ public class CardGameTest {
 
             //Creates two decks and adds cards to it
             CardGame.get_createDecks(2);
-            CardGame.get_dealCardsToDecks(decks, pack);
+            CardGame.get_dealCardsToDecks(CardGame.getDecks(), pack);
 
             //Checks that the size of the decks is equal to the number of cards put into each one
-            for (Deck deck : decks) {
+            for (Deck deck : CardGame.getDecks()) {
                 assertEquals(4, deck.size());
             }
+
+            //Check that the cards were dealt in a Round Robin fashion
+            ArrayList<Deck> decks = CardGame.getDecks();
+
+            //Deck 1 should have all odd cards
+            assertEquals(1, decks.get(0).removeCard().getValue());
+            assertEquals(3, decks.get(0).removeCard().getValue());
+            assertEquals(5, decks.get(0).removeCard().getValue());
+            assertEquals(7, decks.get(0).removeCard().getValue());
+
+            //Deck 2 should have all even cards
+            assertEquals(2, decks.get(1).removeCard().getValue());
+            assertEquals(4, decks.get(1).removeCard().getValue());
+            assertEquals(6, decks.get(1).removeCard().getValue());
+            assertEquals(8, decks.get(1).removeCard().getValue());
         }
     }
 }
