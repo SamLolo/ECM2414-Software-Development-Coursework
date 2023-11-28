@@ -77,6 +77,10 @@ public class Player extends Thread {
         return toDiscard;
     }
 
+    public Card get_getRandomDiscard(){
+        return getRandomDiscard();
+    }
+
     public int getIdentifier() {
         return identifier;
     }

@@ -28,7 +28,7 @@ abstract class CardCollection {
             Card card = cards.take();
             return card;
 
-        // Return null if thread is interupted
+        // Return null if thread is interrupted
         } catch (InterruptedException ex) {
             return null;
         }

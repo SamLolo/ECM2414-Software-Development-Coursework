@@ -52,7 +52,7 @@ public class PlayerTest {
             assertEquals(4, player.getHand().size());
             assertEquals(1, player.getHand().getCard().getValue());
 
-            Card discardedCard = player.getRandomDiscard();
+            Card discardedCard = player.get_getRandomDiscard();
             player.getHand().removeCard(discardedCard);
             rightDeck.addCard(discardedCard);
 

@@ -99,6 +99,10 @@ public class CardGame {
         }
     }
 
+    public static void get_createDecks(int n) {
+        CardGame.createDecks(n);
+    }
+
     private static void addPlayers(int n) {
         // Create n players, passing in their left and right deck, with the right deck being deck 1 (index 0) for the last player
         for (int i = 0; i < n; i++) {
@@ -108,6 +112,10 @@ public class CardGame {
                 players.add(new Player(decks.get(i), decks.get(0)));
             }
         }
+    }
+
+    public static void get_addPlayers(int n) {
+        CardGame.addPlayers(n);
     }
 
     private static void dealCardsToPlayers(ArrayList<Card> pack) {
@@ -120,6 +128,10 @@ public class CardGame {
         }
     }
 
+    public static void get_dealCardsToPlayers(ArrayList<Card> pack) {
+        CardGame.dealCardsToPlayers(pack);
+    }
+
     private static void dealCardsToDecks(ArrayList<Deck> decks, ArrayList<Card> pack) {
         // Deal the remaining cards to the deck in a round-robin fashion, with 4 cards in each deck
         for (int i = 0; i < 4; i++) {
@@ -128,6 +140,10 @@ public class CardGame {
                 deck.addCard(card);
             }
         }
+    }
+
+    public static void get_dealCardsToDecks(ArrayList<Deck> decks, ArrayList<Card> pack) {
+        CardGame.dealCardsToDecks(decks, pack);
     }
 
     public static void main(String[] args) {

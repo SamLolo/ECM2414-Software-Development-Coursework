@@ -46,7 +46,7 @@ public class CardGameTest {
         void createDecks() {
             //Test that creating a new deck actually adds a new deck to the CardGame
             int numberOfDecks = CardGame.getDecks().size();
-            CardGame.createDecks(3);
+            CardGame.get_createDecks(3);
             assertEquals(numberOfDecks + 3, CardGame.getDecks().size());
         }
 
@@ -56,8 +56,8 @@ public class CardGameTest {
             //Test that adding players will increase the number of players in the GardGame
             int numberOfPlayers = CardGame.getPlayers().size();
 
-            CardGame.createDecks(2);
-            CardGame.addPlayers(2);
+            CardGame.get_createDecks(2);
+            CardGame.get_addPlayers(2);
 
             assertEquals(numberOfPlayers + 2, CardGame.getPlayers().size());
 
@@ -79,9 +79,9 @@ public class CardGameTest {
             }
 
             //Creates decks and players and then deals the cards to the players
-            CardGame.createDecks(2);
-            CardGame.addPlayers(2);
-            CardGame.dealCardsToPlayers(pack);
+            CardGame.get_createDecks(2);
+            CardGame.get_addPlayers(2);
+            CardGame.get_dealCardsToPlayers(pack);
 
             //Checks that the hands of the players contain the correct number of cards
             for (Player player : CardGame.getPlayers()) {
@@ -101,8 +101,8 @@ public class CardGameTest {
             }
 
             //Creates two decks and adds cards to it
-            CardGame.createDecks(2);
-            CardGame.dealCardsToDecks(decks, pack);
+            CardGame.get_createDecks(2);
+            CardGame.get_dealCardsToDecks(decks, pack);
 
             //Checks that the size of the decks is equal to the number of cards put into each one
             for (Deck deck : decks) {

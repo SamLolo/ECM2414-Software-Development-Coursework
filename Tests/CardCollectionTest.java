@@ -1,72 +1,72 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardCollectionTest {
-    CardCollection cardCollection = new CardCollection() {
-        @Override
-        public String toString() {
-            return null;
+
+    @Nested
+    class EmptyCardCollectionTests {
+
+        private CardCollection emptyCollection;
+
+        @BeforeEach
+        void setUp() {
+            emptyCollection = new CardCollection() {
+            };
         }
-    };
 
-    private Card card1;
-    private Card card2;
-    private Card card3;
-    private Card card4;
+        @Test
+        void testEmptyCollectionSize() {
+            assertEquals(0, emptyCollection.size());
+        }
 
-    ArrayList<Card> cards = new ArrayList<Card>();
+        @Test
+        void testEmptyCollectionToString() {
+            assertEquals("", emptyCollection.toString());
+        }
 
-    CardCollectionTest() {
+        @Test
+        void testEmptyCollectionIterator() {
+            assertFalse(emptyCollection.getIterator().hasNext());
+        }
     }
 
-    @BeforeEach
-    void setUp() {
-        card1 = new Card(3);
-        card2 = new Card(4);
-        card3 = new Card(6);
-        card4 = new Card(7);
+    @Nested
+    class NonEmptyCardCollectionTests {
 
-        cardCollection.addCard(card1);
-        cardCollection.addCard(card2);
-        cardCollection.addCard(card3);
-        cardCollection.addCard(card4);
+        private CardCollection nonEmptyCollection;
 
-        cards.add(card1);
-        cards.add(card2);
-        cards.add(card3);
-        cards.add(card4);
+        @BeforeEach
+        void setUp() {
+            nonEmptyCollection = new CardCollection() {
+            };
+            nonEmptyCollection.addCard(new Card(1));
+            nonEmptyCollection.addCard(new Card(2));
+            nonEmptyCollection.addCard(new Card(3));
+        }
+
+        @Test
+        void testNonEmptyCollectionSize() {
+            assertEquals(3, nonEmptyCollection.size());
+        }
+
+        @Test
+        void testNonEmptyCollectionToString() {
+            assertEquals("1 2 3", nonEmptyCollection.toString());
+        }
+
+        @Test
+        void testGetCard() {
+            assertEquals(new Card(1).getValue(), nonEmptyCollection.getCard().getValue());
+        }
+
+        @Test
+        void testRemoveCard() {
+            Card removedCard = nonEmptyCollection.removeCard();
+            assertEquals(1, removedCard.getValue());
+            assertEquals(2, nonEmptyCollection.size());
+        }
     }
-
-    @Test
-    void testAddCards() {
-
-        assertEquals(4, cardCollection.size());
-        assertEquals(card1, cardCollection.removeCard());
-        assertEquals(card2, cardCollection.removeCard());
-
-    }
-
-    @Test
-    void testGetAllCards() {
-        assertEquals(cards.size(), cardCollection.size());
-    }
-
-    @Test
-    void testRemoveCard() {
-        cardCollection.removeCard();
-        cards.remove(0);
-
-        assertEquals(cards.size(), cardCollection.size());
-
-    }
-
-    @Test
-    void testCardCollectionSize() {
-        assertEquals(cards.size(), cardCollection.size());
-    }
-
-
 }
