@@ -72,10 +72,10 @@ public class HandTest {
             //Check the size and the remaining card
             assertEquals(2, hand.size());
 
-            hand.removeCard(card1);
+            hand.removeCard(card2);
 
             assertEquals(1, hand.size());
-            assertEquals(card2, hand.getCard());
+            assertEquals(card1, hand.getCard());
         }
     }
 }
