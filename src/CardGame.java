@@ -12,11 +12,11 @@ public class CardGame {
     private static ArrayList<Deck> decks = new ArrayList<Deck>();
 
     public static ArrayList<Player> getPlayers() {
-        //A getter methods for testing
+        // For testing only
         return players;
     }
     public static ArrayList<Deck> getDecks() {
-        //A getter methods for testing
+        // For testing only
         return decks;
     }
 

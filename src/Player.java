@@ -15,17 +15,17 @@ public class Player extends Thread {
     private BufferedWriter output;
 
     public Deck getLeftDeck() {
-        //A getter methods for testing
+        // For testing only
         return leftDeck;
     }
 
     public Deck getRightDeck() {
-        //A getter methods for testing
+        // For testing only
         return rightDeck;
     }
 
     public Hand getHand() {
-        //A getter methods for testing
+        // For testing only
         return hand;
     }
 
