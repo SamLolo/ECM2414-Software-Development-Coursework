@@ -41,6 +41,14 @@ public class CardGameTest {
             ArrayList<Card> cards = CardGame.get_loadPack("zeroPack.txt", 4);
             assertTrue(cards.isEmpty());
         }
+
+        @Test
+        @DisplayName("Load pack with contains a zero file")
+        void loadPackWithNonExistentFile() {
+            //Test With a file that contains a zero
+            ArrayList<Card> cards = CardGame.get_loadPack("NonExistentPack.txt", 4);
+            assertTrue(cards.isEmpty());
+        }
     }
 
     @Nested

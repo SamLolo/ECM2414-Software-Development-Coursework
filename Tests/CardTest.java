@@ -47,6 +47,7 @@ public class CardTest {
             int value = 10;
             Card card1 = new Card(value);
             Card card2 = new Card(value);
+            assertNotEquals(card1, card2);
             assertEquals(card1.getValue(), card2.getValue());
         }
 
@@ -59,6 +60,7 @@ public class CardTest {
             Card card1 = new Card(value1);
             Card card2 = new Card(value2);
             assertNotEquals(card1, card2);
+            assertNotEquals(card1.getValue(), card2.getValue());
 
         }
     }
